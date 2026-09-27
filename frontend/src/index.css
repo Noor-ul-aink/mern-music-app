@@ -1,0 +1,261 @@
+@import "tailwindcss";
+
+@theme {
+  --color-background: #121212;
+  --color-surface: #181818;
+  --color-surface-hover: #282828;
+  --color-card: #1a1a1a;
+  --color-card-hover: #242424;
+  --color-player-bg: #0d0d0d;
+  --color-border: #2a2a2a;
+  --color-primary: #1ed760;
+  --color-primary-hover: #1fdf64;
+  --color-primary-dim: #1ed76020;
+  --color-text-main: #ffffff;
+  --color-text-muted: #a0a0a0;
+  --color-text-subtle: #6b6b6b;
+  --color-danger: #e53e3e;
+
+  --shadow-glow-green: 0 0 20px rgba(30, 215, 96, 0.25);
+  --shadow-glow-sm: 0 0 10px rgba(30, 215, 96, 0.15);
+  --shadow-card: 0 4px 24px rgba(0,0,0,0.5);
+  --shadow-card-hover: 0 8px 40px rgba(0,0,0,0.7);
+  --shadow-player: 0 -4px 40px rgba(0,0,0,0.6);
+
+  --animate-fade-in: fadeIn 0.35s ease-in-out;
+  --animate-slide-up: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-slide-in-left: slideInLeft 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-scale-in: scaleIn 0.2s ease-out;
+  --animate-shimmer: shimmer 2s linear infinite;
+  --animate-pulse-slow: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  --animate-float: float 6s ease-in-out infinite;
+
+  @keyframes fadeIn {
+    0% { opacity: 0; transform: translateY(4px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes slideUp {
+    0% { transform: translateY(24px); opacity: 0; }
+    100% { transform: translateY(0); opacity: 1; }
+  }
+  @keyframes slideInLeft {
+    0% { transform: translateX(-16px); opacity: 0; }
+    100% { transform: translateX(0); opacity: 1; }
+  }
+  @keyframes scaleIn {
+    0% { transform: scale(0.95); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+  @keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    33% { transform: translateY(-8px) rotate(2deg); }
+    66% { transform: translateY(4px) rotate(-1deg); }
+  }
+}
+/* ───────────────────────────────────────────────────────────
+   BASE LAYER
+──────────────────────────────────────────────────────────── */
+@layer base {
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+
+  body {
+    @apply min-h-screen font-sans antialiased;
+    background-color: var(--color-background);
+    color: var(--color-text-main);
+    selection-color: #1ed760;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::selection {
+    background: rgba(30, 215, 96, 0.25);
+    color: #fff;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold tracking-tight;
+  }
+}
+
+/* ───────────────────────────────────────────────────────────
+   COMPONENT LAYER
+──────────────────────────────────────────────────────────── */
+@layer components {
+
+  /* ── Cards ─────────────────────────────────────────────── */
+  .spotify-card {
+    @apply bg-surface hover:bg-surface-hover p-4 rounded-xl transition-all duration-300 relative cursor-pointer shadow-card hover:shadow-card-hover hover:-translate-y-0.5;
+  }
+
+  /* FIX: saas-card was used in Login/Signup but never defined */
+  .saas-card {
+    @apply bg-surface border border-white/5 rounded-2xl shadow-card backdrop-blur-sm;
+  }
+
+  /* ── Song Card ──────────────────────────────────────────── */
+  .song-card {
+    @apply bg-card hover:bg-card-hover p-4 rounded-xl transition-all duration-300 cursor-pointer
+           shadow-card hover:shadow-card-hover hover:-translate-y-1;
+  }
+
+  /* ── Playlist Card ──────────────────────────────────────── */
+  .playlist-card {
+    @apply bg-card hover:bg-card-hover p-4 rounded-xl transition-all duration-300 cursor-pointer
+           shadow-card hover:shadow-card-hover hover:-translate-y-1;
+  }
+
+  /* ── Buttons ────────────────────────────────────────────── */
+  .btn-primary {
+    @apply bg-primary text-black px-6 py-3 rounded-full font-bold text-sm tracking-wide
+           transition-all duration-200
+           hover:scale-[1.03] hover:bg-primary-hover hover:shadow-glow-green
+           active:scale-[0.98]
+           disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:hover:shadow-none;
+  }
+
+  .btn-ghost {
+    @apply px-4 py-2 rounded-full font-medium text-sm text-[#a0a0a0] border border-white/10
+           transition-all duration-200
+           hover:text-white hover:border-white/30 hover:bg-white/5;
+  }
+
+  .btn-danger {
+    @apply px-4 py-2 rounded-full font-medium text-sm text-red-400 border border-red-500/20
+           transition-all duration-200
+           hover:text-white hover:border-red-500/60 hover:bg-red-500/10;
+  }
+
+  /* ── Form Elements ──────────────────────────────────────── */
+  /* FIX: form-label was used in Login/Signup but never defined */
+  .form-label {
+    @apply block text-sm font-medium text-[#a0a0a0] mb-1.5 tracking-wide;
+  }
+
+  .form-input {
+    @apply w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg
+           text-[#ffffff] text-sm
+           placeholder-[#6b6b6b]
+           transition-all duration-200
+           focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/40 focus:bg-white/8;
+  }
+
+  .form-input:hover:not(:focus) {
+    @apply border-white/20 bg-white/7;
+  }
+
+  /* ── Nav / Sidebar ──────────────────────────────────────── */
+  .nav-link {
+    @apply flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium
+           transition-all duration-200 text-[#a0a0a0]
+           hover:text-white hover:bg-white/5;
+  }
+
+  .nav-link-active {
+    @apply flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium
+           text-white bg-white/10 border-l-2 border-primary;
+  }
+
+  /* ── Glass Header ───────────────────────────────────────── */
+  .glass-header {
+    @apply bg-black/60 backdrop-blur-xl sticky top-0 z-40 transition-all duration-300;
+  }
+}
+
+/* ───────────────────────────────────────────────────────────
+   UTILITIES LAYER
+──────────────────────────────────────────────────────────── */
+@layer utilities {
+  .text-gradient {
+    @apply bg-gradient-to-r from-primary to-emerald-300 bg-clip-text text-transparent;
+  }
+
+  .bg-mesh {
+    background-image:
+      radial-gradient(at 40% 20%, hsla(152, 100%, 50%, 0.08) 0px, transparent 50%),
+      radial-gradient(at 80% 0%, hsla(262, 100%, 50%, 0.07) 0px, transparent 50%),
+      radial-gradient(at 0% 50%, hsla(220, 100%, 50%, 0.05) 0px, transparent 50%);
+  }
+
+  .shimmer-bg {
+    background: linear-gradient(
+      105deg,
+      #1a1a1a 0%,
+      #242424 40%,
+      #2a2a2a 60%,
+      #1a1a1a 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 2s linear infinite;
+  }
+}
+
+/* ───────────────────────────────────────────────────────────
+   GLOBAL HELPERS
+──────────────────────────────────────────────────────────── */
+
+/* Album / playlist art gradient placeholder */
+.gradient-placeholder {
+  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+}
+
+/* Custom thin scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 99px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Custom HTML5 Audio Player (minimal override) */
+audio.custom-audio {
+  height: 36px;
+  filter: invert(1) sepia(1) saturate(2) hue-rotate(95deg) brightness(0.9);
+  opacity: 0.85;
+}
+audio.custom-audio:hover {
+  opacity: 1;
+}
+
+/* ───────────────────────────────────────────────────────────
+   KEYFRAMES (global, not Tailwind-managed)
+──────────────────────────────────────────────────────────── */
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position:  200% 0; }
+}
+
+@keyframes equalizer {
+  0%, 100% { height: 6px; }
+  50%       { height: 16px; }
+}
+
+@keyframes pulse-ring {
+  0%   { box-shadow: 0 0 0 0   rgba(30, 215, 96, 0.4); }
+  70%  { box-shadow: 0 0 0 10px rgba(30, 215, 96, 0);  }
+  100% { box-shadow: 0 0 0 0   rgba(30, 215, 96, 0);   }
+}
+
+/* Equalizer bars for "now playing" indicator */
+.eq-bar {
+  display: inline-block;
+  width: 3px;
+  border-radius: 2px;
+  background: #1ed760;
+  animation: equalizer 0.8s ease-in-out infinite;
+}
+.eq-bar:nth-child(2) { animation-delay: 0.15s; height: 12px; }
+.eq-bar:nth-child(3) { animation-delay: 0.3s; height: 8px; }

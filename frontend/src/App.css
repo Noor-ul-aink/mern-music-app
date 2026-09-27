@@ -1,0 +1,37 @@
+/* App-level micro-interaction helpers */
+
+/* Smooth play button reveal */
+.group:hover .play-overlay {
+  opacity: 1;
+  transform: translateY(0);
+}
+.play-overlay {
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+/* Heart like animation */
+@keyframes heartPop {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.4); }
+  70%  { transform: scale(0.9); }
+  100% { transform: scale(1); }
+}
+.heart-pop {
+  animation: heartPop 0.4s ease-in-out;
+}
+
+/* Auth page decorative floating shapes */
+@keyframes floatShape {
+  0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.4; }
+  50%       { transform: translateY(-20px) rotate(5deg); opacity: 0.6; }
+}
+.auth-shape {
+  animation: floatShape 8s ease-in-out infinite;
+}
+
+/* Active song pulse ring */
+.ring-pulse {
+  animation: pulse-ring 1.5s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+}
